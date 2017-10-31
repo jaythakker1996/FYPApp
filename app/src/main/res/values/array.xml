@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cuisineItems">
+        <item>Any</item>
+        <item>Indian</item>
+        <item>Chinese</item>
+        <item>Italian</item>
+        <item>Mexican</item>
+    </string-array>
+</resources>
