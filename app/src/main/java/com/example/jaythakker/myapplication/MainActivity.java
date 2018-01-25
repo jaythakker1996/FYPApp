@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import java.net.URL;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(access)
                         {
-                            Intent registerIntent = new Intent(MainActivity.this,SearchPage.class);
+                            Intent registerIntent = new Intent(MainActivity.this,FilterSearch.class);
                             MainActivity.this.startActivity(registerIntent);
                         }
                         else
