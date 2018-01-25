@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String user = username.getText().toString();
                 final String pass = password.getText().toString();
-                String url ="http://192.168.0.165:8080/login/"+user+"and"+pass;
+                String url ="http://192.168.1.101:8080/login/"+user+"and"+pass;
                 Response.Listener list=new Response.Listener<JSONObject>() {
 
                     @Override
