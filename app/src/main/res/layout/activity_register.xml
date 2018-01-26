@@ -4,23 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_background"
     tools:context="com.example.jaythakker.myapplication.Register"
-    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
     <Button
         android:id="@+id/register"
+        android:layout_width="100dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="17dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Register"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/number"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <EditText
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="90dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
-        android:layout_marginBottom="-224dp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/emailid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="email@abc.com"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/name" />
 
     <EditText
         android:id="@+id/password"
@@ -28,11 +61,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="password"
+        android:hint="Password"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/emailid"
-        android:layout_marginTop="19dp"
         app:layout_constraintTop_toBottomOf="@+id/emailid"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/emailid" />
@@ -43,59 +75,26 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="password"
+        android:hint="Retype Password"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/password"
-        android:layout_marginTop="19dp"
         app:layout_constraintTop_toBottomOf="@+id/password"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/password" />
 
     <EditText
-        android:id="@+id/emailid"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textEmailAddress"
-        android:text="email@abc.com"
+        android:inputType="date"
+        android:hint="Date"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/name"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/name" />
-
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="47dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Address"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
         app:layout_constraintRight_toRightOf="@+id/rpassword"
-        android:layout_marginTop="78dp"
         app:layout_constraintTop_toBottomOf="@+id/rpassword"
+        tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/rpassword" />
 
     <EditText
@@ -104,27 +103,42 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
+        android:hint="Mobile"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintRight_toRightOf="@+id/address"
-        android:layout_marginTop="23dp"
-        app:layout_constraintTop_toBottomOf="@+id/address"
-        android:layout_marginRight="1dp" />
-
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/rpassword"
-        android:layout_marginTop="21dp"
-        app:layout_constraintTop_toBottomOf="@+id/rpassword"
+        app:layout_constraintRight_toRightOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/date"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/rpassword" />
+        app:layout_constraintLeft_toLeftOf="@+id/date" />
+
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="51dp"
+        android:layout_height="29dp"
+        android:text="LOG IN"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="47dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        tools:layout_constraintBaseline_creator="1"
+        android:layout_marginRight="47dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="240dp"
+        android:layout_height="29dp"
+        android:text="ALREADY HAVE AN ACCOUNT ?"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintRight_toLeftOf="@+id/login"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register" />
 
 </android.support.constraint.ConstraintLayout>

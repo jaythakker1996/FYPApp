@@ -109,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                     Toast.makeText(getApplicationContext(),"Invalid email address or password !",Toast.LENGTH_SHORT).show();
-
-
             }
         });
 

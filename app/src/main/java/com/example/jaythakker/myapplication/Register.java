@@ -2,6 +2,7 @@ package com.example.jaythakker.myapplication;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +31,7 @@ import java.util.Locale;
 public class Register extends AppCompatActivity {
 
     int mYear=0,mMonth=0,mDay=0;
+    private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +47,22 @@ public class Register extends AppCompatActivity {
         final EditText rpass = (EditText) findViewById(R.id.rpassword);
         final EditText em=(EditText) findViewById(R.id.emailid);
         final EditText num =(EditText) findViewById(R.id.number);
-        final EditText add=(EditText) findViewById(R.id.address);
         final EditText date=(EditText) findViewById(R.id.date);
+        final TextView login = (TextView) findViewById(R.id.login);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(Register.this, MainActivity.class);
+                Register.this.startActivity(registerIntent);
+            }
+        });
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,32 +70,21 @@ public class Register extends AppCompatActivity {
 
                 final String name = na.getText().toString();
                 final String password = pass.getText().toString();
-                final String rpassword=rpass.getText().toString();
-                final String email=em.getText().toString();
-                final String dob=date.getText().toString();
+                final String rpassword = rpass.getText().toString();
+                final String email = em.getText().toString();
+                final String dob = date.getText().toString();
+                final String numbers = num.getText().toString();
+                int fnumber = 0;
 
-                final String numbers =num.getText().toString();
-                final String address=add.getText().toString();
-                int fnumber=0;
-                try{
+                final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                    fnumber=Integer.parseInt(numbers);
-                }
-                catch(NumberFormatException e){
-                    // handle your exception
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                    builder.setMessage("Number prob"+e)
-                            .create()
-                            .show();
-
-                }
                 JSONObject obj=new JSONObject();
+
                 try {
                     obj.put("email",email);
                     obj.put("password",password);
                     obj.put("name",name);
                     obj.put("number",fnumber);
-                    obj.put("address",address);
                     obj.put("dob",(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(dob))));
                     obj.put("roles","USER");
                     obj.put("active",1);
@@ -87,14 +94,15 @@ public class Register extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
                 try {
                     builder.setMessage("date"+(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(dob))))
                             .create()
                             .show();
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
+
                 String url ="http://192.168.1.101:8080/login/";
 
                 Response.Listener list=new Response.Listener<JSONObject>(){
@@ -102,6 +110,7 @@ public class Register extends AppCompatActivity {
                     public void onResponse(JSONObject response)
                     {
                         String text=(response.toString());
+                        mProgress.dismiss();
                         boolean access= false;
                         try {
                             access = response.getBoolean("success");
@@ -110,13 +119,13 @@ public class Register extends AppCompatActivity {
                         }
                         if(access)
                         {
-                            Intent registerIntent = new Intent(Register.this,MainActivity.class);
+                            Intent registerIntent = new Intent(Register.this, MainActivity.class);
                             Register.this.startActivity(registerIntent);
                         }
                         else
                         {
                             AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                            builder.setMessage("Failed")
+                            builder.setMessage("Could not register user !")
                                     .create()
                                     .show();
                         }
@@ -127,18 +136,35 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        mProgress.dismiss();
                         // TODO Auto-generated method stub
                         AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                        builder.setMessage("error"+error)
+                        builder.setMessage("Could not connect to server ! Please try again after a while.")
                                 .create()
                                 .show();
                     }
                 };
 
-                JSONRequest req=new JSONRequest(Request.Method.POST,url,obj,list,err);
-
-                queue.add(req);
-
+                if(name.length() == 0)
+                    Toast.makeText(getApplicationContext(),"Name field is empty !",Toast.LENGTH_SHORT).show();
+                else if(!(email.matches(emailPattern) && email.length() > 0))
+                    Toast.makeText(getApplicationContext(),"Invalid Email ID !",Toast.LENGTH_SHORT).show();
+                else if(password.length() <= 0 || !password.equals(rpassword))
+                    Toast.makeText(getApplicationContext(),"Passwords don't match !",Toast.LENGTH_SHORT).show();
+                else if(numbers.length() <= 0) {
+                    Toast.makeText(getApplicationContext(), "Mobile field empty !", Toast.LENGTH_SHORT).show();
+                    try {
+                        fnumber = Integer.parseInt(numbers);
+                    } catch (NumberFormatException e) {
+                        // handle your exception
+                        Toast.makeText(getApplicationContext(), "Invalid Mobile No. !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    JSONRequest req=new JSONRequest(Request.Method.POST,url,obj,list,err);
+                    queue.add(req);
+                    mProgress.show();
+                }
             }
         });
     }
