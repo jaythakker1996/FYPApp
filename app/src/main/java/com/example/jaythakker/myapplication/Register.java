@@ -103,7 +103,7 @@ public class Register extends AppCompatActivity {
                     e.printStackTrace();
                 }*/
 
-                String url ="http://192.168.1.101:8080/login/";
+                String url ="http://192.168.0.104:8080/subscribe";
 
                 Response.Listener list=new Response.Listener<JSONObject>(){
                     @Override
