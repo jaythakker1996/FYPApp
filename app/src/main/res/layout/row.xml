@@ -3,35 +3,42 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp"
-    android:orientation="vertical" >
+    android:layout_marginBottom="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="2dp"
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#009A57"
-        android:text="Name" />
+        android:text="Name"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
 
     <TextView
         android:id="@+id/restaurantArea"
         android:layout_width="wrap_content"
-        android:textColor="#166CED"
         android:layout_height="wrap_content"
-        android:text="Area" />
+        android:text="Area"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
 
     <TextView
         android:id="@+id/restaurantLocation"
         android:layout_width="wrap_content"
-        android:textColor="#166CED"
         android:layout_height="wrap_content"
-        android:text="Location" />
+        android:text="Location"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
 
     <TextView
         android:id="@+id/restaurantCuisine"
         android:layout_width="wrap_content"
-        android:textColor="#166CED"
         android:layout_height="wrap_content"
-        android:text="Cuisine" />
+        android:text="Cuisine"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
 
 </LinearLayout>

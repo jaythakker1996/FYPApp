@@ -24,7 +24,15 @@
         <activity
             android:name=".FilterSearch"
             android:exported="true" />
-        <activity android:name=".Results"></activity>
+        <activity android:name=".Results" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDOk5AQyDfXUzYHDeKss-cZBFgP8NXyB1U" />
+
+        <activity android:name=".LocationSearch" />
+        <activity android:name=".Recommendations" />
+        <activity android:name=".History"></activity>
     </application>
 
 </manifest>

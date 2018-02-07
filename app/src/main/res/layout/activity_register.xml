@@ -116,29 +116,31 @@
         android:id="@+id/login"
         android:layout_width="51dp"
         android:layout_height="29dp"
-        android:text="LOG IN"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:layout_constraintRight_creator="1"
         android:layout_marginEnd="47dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="47dp"
+        android:text="LOG IN"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBaseline_creator="1"
-        android:layout_marginRight="47dp" />
+        tools:layout_constraintRight_creator="1" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="240dp"
         android:layout_height="29dp"
         android:text="ALREADY HAVE AN ACCOUNT ?"
+        android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintRight_toLeftOf="@+id/login"
-        tools:layout_constraintRight_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register" />
+        app:layout_constraintRight_toLeftOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/register"
+        tools:layout_constraintRight_creator="1" />
 
 </android.support.constraint.ConstraintLayout>
