@@ -155,7 +155,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                         .show();
                 */
 
-                String url ="http://192.168.43.113:8080/search/";
+                String url ="http://192.168.43.113:8080/auth/search/";
                 Response.Listener list=new Response.Listener<JSONObject>() {
 
                     @Override

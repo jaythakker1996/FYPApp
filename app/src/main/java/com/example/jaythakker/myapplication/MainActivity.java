@@ -58,18 +58,32 @@ public class MainActivity extends AppCompatActivity {
 
                 final String user = username.getText().toString();
                 final String pass = password.getText().toString();
-                String url ="http://192.168.1.101:8080/login/"+user+"and"+pass;
+                String url ="http://192.168.0.104:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
+                //String url ="http://localhost:8080/oauth/token";
+                //ServerValues.USERNAME=user;
+                //ServerValues.PASSWORD=pass;
 
-                Response.Listener list=new Response.Listener<JSONObject>() {
+                Response.Listener list=new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
-                        String text=(response.toString());
+                    public void onResponse(String response) {
+                        String text = response;
+                        JSONObject object = null;
+                        try {
+                            object = new JSONObject(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         mProgress.dismiss();
                         boolean access= false;
                         try {
-                            access = response.getBoolean("success");
-                        } catch (JSONException e) {
+                            if(object.has("access_token")) {
+                                access = true;
+                                ServerValues.ACCESS_TOKEN=object.optString("access_token");
+                            }
+                            else
+                                access=false;
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         if(access)
@@ -86,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 };
+
                 Response.ErrorListener err=new Response.ErrorListener() {
 
                     @Override
@@ -102,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (user.matches(emailPattern) && user.length() > 0 && pass.length() > 0)
                 {
-                    JSONRequest req=new JSONRequest(Request.Method.GET,url,null,list,err);
+                    TokenRequest req=new TokenRequest(Request.Method.GET,url,list,err);
+                    //JSONRequest req=new JSONRequest(Request.Method.GET,url,null,list,err);
                     // Access the RequestQueue through your singleton class.
                     queue.add(req);
                     mProgress.show();
