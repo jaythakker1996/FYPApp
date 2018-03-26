@@ -16,6 +16,7 @@ public class Restaurant implements Parcelable{
     private String cuisine;
     private double est_cost_per_person;
 
+
     public Restaurant(String restId, String name, String area, double latitude, double longitude, String cuisine, double est_cost_per_person){
         this.restId = restId;
         this.name = name;

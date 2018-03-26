@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        final Button login = (Button) findViewById(R.id.login);
+        final Button login = (Button) findViewById(R.id.confirmBooking);
         final TextView signup = (TextView) findViewById(R.id.signup);
 
         final RequestQueue queue=VolleyQueue.getInstance(this.getApplicationContext()).getRequestQueue();;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String user = username.getText().toString();
                 final String pass = password.getText().toString();
-                String url ="http://192.168.0.104:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
+                String url ="http://192.168.43.170:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
                 //String url ="http://localhost:8080/oauth/token";
                 //ServerValues.USERNAME=user;
                 //ServerValues.PASSWORD=pass;

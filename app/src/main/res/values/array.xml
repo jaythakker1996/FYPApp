@@ -2,10 +2,10 @@
 <resources>
     <string-array name="cuisineItems">
         <item>Any</item>
-        <item>Indian</item>
+        <item>North Indian</item>
         <item>Chinese</item>
         <item>Italian</item>
-        <item>Mexican</item>
+        <item>Continental</item>
         <item>South Indian</item>
         <item>Fast Food</item>
     </string-array>

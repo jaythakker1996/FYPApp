@@ -11,14 +11,13 @@
 
     <Button
         android:id="@+id/register"
-        android:layout_width="100dp"
-        android:layout_height="46dp"
+        android:layout_width="108dp"
+        android:layout_height="52dp"
         android:layout_marginTop="17dp"
-        android:background="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/holo_blue_dark"
         android:text="Register"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/number"
@@ -113,7 +112,7 @@
 
 
     <TextView
-        android:id="@+id/login"
+        android:id="@+id/confirmBooking"
         android:layout_width="51dp"
         android:layout_height="29dp"
         android:layout_marginEnd="47dp"
@@ -139,7 +138,7 @@
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/login"
+        app:layout_constraintRight_toLeftOf="@+id/confirmBooking"
         app:layout_constraintTop_toBottomOf="@+id/register"
         tools:layout_constraintRight_creator="1" />
 

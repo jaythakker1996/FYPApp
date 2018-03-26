@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_background"
-    android:backgroundTint="@color/BlackTint"
+    android:backgroundTint="#a5010101"
     android:backgroundTintMode="src_atop"
     tools:context="com.example.jaythakker.myapplication.FilterSearch"
     tools:layout_editor_absoluteX="0dp"
@@ -28,8 +30,8 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <TextView
-        android:id="@+id/location"
+    <EditText
+        android:id="@+id/location2"
         android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginEnd="28dp"
@@ -52,10 +54,10 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"        />
 
     <ImageButton
-        android:id="@+id/history"
+        android:id="@+id/recommendations"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="20dp"
@@ -64,126 +66,116 @@
         android:background="@drawable/roundedbutton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_recent_history" />
+        app:srcCompat="@android:drawable/ic_menu_today" />
 
     <ImageButton
-        android:id="@+id/recommendations"
+        android:id="@+id/history"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="305dp"
         android:background="@drawable/roundedbutton"
-        app:layout_constraintRight_toLeftOf="@+id/history"
+        app:layout_constraintRight_toLeftOf="@+id/recommendations"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_today" />
+        app:srcCompat="@android:drawable/ic_menu_recent_history" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="305dp"
+        android:background="@drawable/roundedbutton"
+        app:srcCompat="@android:drawable/ic_menu_mylocation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
+        android:layout_width="384dp"
         android:layout_height="195dp"
-
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1">
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="51dp"
-            android:layout_height="53dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="14dp"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toRightOf="@+id/cuisine"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_mylocation"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        <Spinner
+            android:id="@+id/cuisine"
+            android:layout_width="255dp"
+            android:layout_height="41dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:entries="@array/cuisineItems"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editText8"
+            android:layout_width="146dp"
+            android:layout_height="41dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Time To Spare"
+            android:inputType="time"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cuisine" />
 
         <EditText
             android:id="@+id/noOfPersons"
-            android:layout_width="123dp"
+            android:layout_width="0dp"
             android:layout_height="41dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
-            android:hint="Head Count"
+            android:hint="HC"
             android:inputType="number"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/search"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cuisine"
+            app:layout_constraintLeft_toRightOf="@+id/cuisine"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1" />
 
+        <EditText
+            android:id="@+id/budget"
+            android:layout_width="162dp"
+            android:layout_height="41dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Budget Per Person"
+            android:inputType="number"
+            android:textSize="16sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cuisine" />
+
         <Button
             android:id="@+id/search"
-            android:layout_width="75dp"
-            android:layout_height="39dp"
-            android:layout_marginBottom="20dp"
-            android:background="@android:color/holo_blue_dark"
+            android:layout_width="87dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@android:color/holo_blue_dark"
             android:text="Search"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1" />
 
-        <Spinner
-            android:id="@+id/cuisine"
-            android:layout_width="265dp"
-            android:layout_height="41dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:entries="@array/cuisineItems"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
-
-        <EditText
-            android:id="@+id/budget"
-            android:layout_width="0dp"
-            android:layout_height="41dp"
-            android:layout_marginBottom="56dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="57dp"
-            android:ems="10"
-            android:hint="Budget Per Person"
-            android:inputType="number"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/search"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toRightOf="@+id/noOfPersons"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cuisine"
-            tools:layout_constraintBottom_creator="1"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintTop_creator="1" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

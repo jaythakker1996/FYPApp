@@ -1,5 +1,4 @@
 package com.example.jaythakker.myapplication;
-//(add restaurant markers, enable location searching)
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,9 +22,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +43,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -60,6 +60,10 @@ import java.util.ArrayList;
 
 import android.content.res.Resources;
 
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -72,8 +76,6 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 public class FilterSearch extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback, com.google.android.gms.location.LocationListener, OnMapReadyCallback{
 
@@ -83,12 +85,14 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
     private LocationRequest mLocationRequest;
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
-
     private ProgressDialog mProgress;
+    private EditText dispLoc;
 
     double latitude;
     double longitude;
     String address;
+    private Activity activity;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     private LocationHelper locationHelper;
 
@@ -113,15 +117,17 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
         final EditText budgetEntered = (EditText) findViewById(R.id.budget);
         final Spinner cuisineSelected = (Spinner) findViewById(R.id.cuisine);
         final Button search = (Button) findViewById(R.id.search);
-        final TextView dispLoc = (TextView) findViewById(R.id.location);
         final ImageButton getLoc = (ImageButton) findViewById(R.id.imageButton);
         final RequestQueue queue = VolleyQueue.getInstance(this.getApplicationContext()).getRequestQueue();
         final Context context = this;
         final ImageButton history = (ImageButton) findViewById(R.id.history);
         final ImageButton recommendations = (ImageButton) findViewById(R.id.recommendations);
+        final EditText timeToSpare = (EditText)findViewById(R.id.editText8);
+        dispLoc = (EditText) findViewById(R.id.location2);
 
         locationHelper = new LocationHelper(this);
         locationHelper.checkpermission();
+        activity = this;
 
         mProgress = new ProgressDialog(this);
         mProgress.setTitle("Processing...");
@@ -138,6 +144,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onClick(View view) {
                 int noOfPersons = 0, budget = 0;
+                String time = timeToSpare.getText().toString();
                 try {
                     noOfPersons = Integer.parseInt(noOfPersonsEntered.getText().toString());
                     budget = Integer.parseInt(budgetEntered.getText().toString());
@@ -149,13 +156,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
 
                 String cuisine = cuisineSelected.getSelectedItem().toString();
 
-                /*AlertDialog.Builder builder = new AlertDialog.Builder(FilterSearch.this);
-                builder.setMessage(noOfPersons + " " + budget + " " + " " + cuisine)
-                        .create()
-                        .show();
-                */
-
-                String url ="http://192.168.43.113:8080/auth/search/";
+                String url ="http://172.16.100.212:8080/auth/search/";
                 Response.Listener list=new Response.Listener<JSONObject>() {
 
                     @Override
@@ -175,10 +176,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                                 ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 
                                 for (int i = 0; i < jsonRests.length(); i++) {
-                                    /*AlertDialog.Builder builder1 = new AlertDialog.Builder(FilterSearch.this);
-                                    builder1.setMessage(jsonRests.getJSONObject(i).getString("name"))
-                                            .create()
-                                            .show();*/
+
                                     restaurants.add(i, new Restaurant(jsonRests.getJSONObject(i).getString("restId"),
                                             jsonRests.getJSONObject(i).getString("name"),
                                             jsonRests.getJSONObject(i).getString("area"),
@@ -197,7 +195,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                         }
                         else{
                             AlertDialog.Builder builder2 = new AlertDialog.Builder(FilterSearch.this);
-                            builder2.setMessage("Can't connect to the server at this moment! Please try again later.")
+                            builder2.setMessage("No results to display at the moment! Please try modifying your constraints.")
                                     .create()
                                     .show();
                         }
@@ -212,26 +210,27 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                         error.printStackTrace();
                         // TODO Auto-generated method stub
                         AlertDialog.Builder builder = new AlertDialog.Builder(FilterSearch.this);
-                        builder.setMessage("Can't connect to the server at this moment! Please try again later.")
+                        builder.setMessage("Could not connect to server ! Please try again after a while.")
                                 .create()
                                 .show();
                     }
                 };
 
+                JSONObject jsonObj = new JSONObject();
+
                 try {
 
-                    JSONObject jsonObj = new JSONObject();
                     jsonObj.put("noOfPersons", noOfPersons);
                     jsonObj.put("budget", budget);
                     jsonObj.put("cuisine", cuisine);
                     jsonObj.put("latitude", latitude);
                     jsonObj.put("longitude", longitude);
-
+                    jsonObj.put("time", time);
                 }
                 catch(JSONException ex){
                     ex.printStackTrace();
                 }
-                JSONRequest req = new JSONRequest(Request.Method.GET,url,null,list,err);
+                JSONRequest req = new JSONRequest(Request.Method.POST,url,jsonObj,list,err);
                 // Access the RequestQueue through your singleton class.
                 queue.add(req);
                 mProgress.show();
@@ -247,12 +246,12 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                     longitude = mLastLocation.getLongitude();
                     LatLng myLaLn = new LatLng(latitude, longitude);
 
-                    CameraPosition camPos = new CameraPosition.Builder().target(myLaLn)
+                    mCameraPosition = new CameraPosition.Builder().target(myLaLn)
                             .zoom(15)
                             .bearing(45)
                             .build();
 
-                    CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(camPos);
+                    CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(mCameraPosition);
 
                     if(mMap != null) {
                         mMap.animateCamera(camUpd3);
@@ -263,9 +262,9 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
 
                     address = getAddress();
                     if(address != null)
-                        dispLoc.setText(address.substring(0, 28) + "...");
+                        dispLoc.setText(address.substring(0, 30) + "...");
                     else
-                        showToast("Something went wrong ! Try again later.");
+                        showToast("Check your internet connection and try again !");
 
                 } else {
                     showToast("Couldn't get the location. Make sure location is enabled on the device.");
@@ -275,12 +274,17 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
 
         dispLoc.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(FilterSearch.this);
-                builder1.setMessage(address)
-                        .create()
-                        .show();
-
+            public void onClick(View view){
+                try {
+                    Intent intent =
+                            new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                                    .build(activity);
+                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                } catch (GooglePlayServicesRepairableException e) {
+                    // TODO: Handle the error.
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    // TODO: Handle the error.
+                }
             }
         });
 
@@ -304,6 +308,43 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        locationHelper.onActivityResult(requestCode,resultCode,data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+
+                dispLoc.setText(place.getAddress().toString().substring(0, 33) + "...");
+                LatLng queriedLocation = place.getLatLng();
+                Log.i(TAG, "Place: " + place.getName());
+
+                mCameraPosition = new CameraPosition.Builder().target(queriedLocation)
+                        .zoom(15)
+                        .bearing(45)
+                        .build();
+                CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(mCameraPosition);
+
+                if(mMap != null && queriedLocation != null) {
+                    mMap.animateCamera(camUpd3);
+                    mMap.clear();
+                    MarkerOptions markerOpts = new MarkerOptions().position(queriedLocation).title("my Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                    mMap.addMarker(markerOpts);
+                }
+
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                // TODO: Handle the error.
+                showToast("Check your internet connection and try again !");
+                Log.i(TAG, status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
     /**
      * Saves the state of the map when the activity is paused.
      */
@@ -316,6 +357,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    @Override
     protected void onStart(){
         super.onStart();
         if(!locationHelper.isPermissionGranted()){
@@ -373,11 +415,6 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
             }
         }
         return null;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        locationHelper.onActivityResult(requestCode,resultCode,data);
     }
 
     //Google api callback methods

@@ -44,9 +44,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
             holder.area = (TextView) v.findViewById(R.id.restaurantArea);
             holder.location = (TextView) v.findViewById(R.id.restaurantLocation);
             holder.cuisine = (TextView) v.findViewById(R.id.restaurantCuisine);
-            //holder.tvHeight = (TextView) v.findViewById(R.id.tvHeight);
-            //holder.tvSpouse = (TextView) v.findViewById(R.id.tvSpouse);
-            //holder.tvChildren = (TextView) v.findViewById(R.id.tvChildren);
+
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();

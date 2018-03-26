@@ -1,15 +1,12 @@
 package com.example.jaythakker.myapplication;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +19,8 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class Register extends AppCompatActivity {
 
@@ -48,7 +42,7 @@ public class Register extends AppCompatActivity {
         final EditText em=(EditText) findViewById(R.id.emailid);
         final EditText num =(EditText) findViewById(R.id.number);
         final EditText date=(EditText) findViewById(R.id.date);
-        final TextView login = (TextView) findViewById(R.id.login);
+        final TextView login = (TextView) findViewById(R.id.confirmBooking);
 
         mProgress = new ProgressDialog(this);
         mProgress.setTitle("Processing...");
@@ -61,6 +55,22 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 Intent registerIntent = new Intent(Register.this, MainActivity.class);
                 Register.this.startActivity(registerIntent);
+            }
+        });
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                    builder.setMessage("date "+(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(date.getText().toString()))))
+                            .create()
+                            .show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -94,16 +104,7 @@ public class Register extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                /*AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                try {
-                    builder.setMessage("date"+(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(dob))))
-                            .create()
-                            .show();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }*/
-
-                String url ="http://192.168.1.101:8080/subscribe/";
+                String url ="http://192.168.43.170:8080/subscribe/";
 
                 Response.Listener list=new Response.Listener<JSONObject>(){
                     @Override
@@ -131,6 +132,7 @@ public class Register extends AppCompatActivity {
                         }
                     }
                 };
+
                 Response.ErrorListener err=new Response.ErrorListener() {
 
                     @Override
