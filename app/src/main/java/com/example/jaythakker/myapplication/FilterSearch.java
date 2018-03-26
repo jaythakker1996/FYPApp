@@ -1,4 +1,5 @@
 package com.example.jaythakker.myapplication;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,8 +13,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.Image;
-import android.media.audiofx.BassBoost;
 import android.os.Build;
 import android.os.Parcelable;
 import android.provider.Settings;
@@ -29,13 +28,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -86,7 +81,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
     private ProgressDialog mProgress;
-    private EditText dispLoc;
+    private TextView dispLoc;
 
     double latitude;
     double longitude;
@@ -123,7 +118,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
         final ImageButton history = (ImageButton) findViewById(R.id.history);
         final ImageButton recommendations = (ImageButton) findViewById(R.id.recommendations);
         final EditText timeToSpare = (EditText)findViewById(R.id.editText8);
-        dispLoc = (EditText) findViewById(R.id.location2);
+        dispLoc = (TextView) findViewById(R.id.location2);
 
         locationHelper = new LocationHelper(this);
         locationHelper.checkpermission();
@@ -315,8 +310,10 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
 
-                dispLoc.setText(place.getAddress().toString().substring(0, 33) + "...");
+                dispLoc.setText((place.getName().toString() + place.getAddress().toString()).substring(0, 33) + "...");
                 LatLng queriedLocation = place.getLatLng();
+                longitude = queriedLocation.longitude;
+                latitude = queriedLocation.latitude;
                 Log.i(TAG, "Place: " + place.getName());
 
                 mCameraPosition = new CameraPosition.Builder().target(queriedLocation)

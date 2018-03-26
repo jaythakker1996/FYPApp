@@ -33,8 +33,9 @@
         <activity android:name=".LocationSearch" />
         <activity android:name=".Recommendations" />
         <activity android:name=".History" />
-        <activity android:name=".ConfirmPage"
-            android:exported="true"></activity>
+        <activity
+            android:name=".ConfirmPage"
+            android:exported="true" />
     </application>
 
 </manifest>
