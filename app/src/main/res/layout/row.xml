@@ -17,29 +17,26 @@
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Name"
-        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+        android:textColor="@color/place_autocomplete_search_text"
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/restaurantArea"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:text="Area"
-        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
-
-    <TextView
-        android:id="@+id/restaurantLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+        android:textColor="@color/place_autocomplete_search_text"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/restaurantCuisine"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:text="Cuisine"
-        android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+        android:textColor="@color/place_autocomplete_search_text"
+        android:textSize="16sp" />
 
 </LinearLayout>

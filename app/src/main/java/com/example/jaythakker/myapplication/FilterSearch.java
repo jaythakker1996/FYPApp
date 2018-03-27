@@ -1,21 +1,15 @@
+//TODO Update Cuisines
+
 package com.example.jaythakker.myapplication;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
-import android.os.Parcelable;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -23,9 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,7 +34,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
@@ -50,15 +41,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import android.content.res.Resources;
 
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,7 +56,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class FilterSearch extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -115,7 +102,6 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
         final ImageButton getLoc = (ImageButton) findViewById(R.id.imageButton);
         final RequestQueue queue = VolleyQueue.getInstance(this.getApplicationContext()).getRequestQueue();
         final Context context = this;
-        final ImageButton history = (ImageButton) findViewById(R.id.history);
         final ImageButton recommendations = (ImageButton) findViewById(R.id.recommendations);
         final EditText timeToSpare = (EditText)findViewById(R.id.editText8);
         dispLoc = (TextView) findViewById(R.id.location2);
@@ -151,7 +137,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
 
                 String cuisine = cuisineSelected.getSelectedItem().toString();
 
-                String url ="http://172.16.100.212:8080/auth/search/";
+                String url ="http://192.168.1.102:8080/auth/search/";
                 Response.Listener list=new Response.Listener<JSONObject>() {
 
                     @Override
@@ -190,7 +176,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                         }
                         else{
                             AlertDialog.Builder builder2 = new AlertDialog.Builder(FilterSearch.this);
-                            builder2.setMessage("No results to display at the moment! Please try modifying your constraints.")
+                            builder2.setMessage("No results to display at the moment! Modify search parameters and try again.")
                                     .create()
                                     .show();
                         }
@@ -290,13 +276,6 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
-        history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         if (locationHelper.checkPlayServices()) {
             locationHelper.buildGoogleApiClient();
         }
@@ -328,7 +307,6 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                     MarkerOptions markerOpts = new MarkerOptions().position(queriedLocation).title("my Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
                     mMap.addMarker(markerOpts);
                 }
-
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);

@@ -68,8 +68,9 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     }
 
     /**
-     * Method to check the availability of location permissions
-     * */
+    * Method to check the availability of location permissions
+    *
+    */
 
     public void checkpermission()
     {
@@ -81,8 +82,8 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     }
 
     /**
-     * Method to verify google play services on the device
-     * */
+    * Method to verify google play services on the device
+    */
 
     public boolean checkPlayServices() {
 
@@ -103,8 +104,8 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     }
 
     /**
-     * Method to display the location on UI
-     * */
+    * Method to display the location on UI
+    */
 
     public Location getLocation() {
 
@@ -120,13 +121,10 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
             catch (SecurityException e)
             {
                 e.printStackTrace();
-
             }
-
         }
 
         return null;
-
     }
 
     public Address getAddress(double latitude,double longitude)
@@ -144,13 +142,12 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
         }
 
         return null;
-
     }
 
 
     /**
-     * Method used to build GoogleApiClient
-     */
+    * Method used to build GoogleApiClient
+    */
 
     public void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(context)
@@ -202,16 +199,18 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     }
 
     /**
-     * Method used to connect GoogleApiClient
-     */
+    * Method used to connect GoogleApiClient
+    */
+
     public void connectApiClient()
     {
         mGoogleApiClient.connect();
     }
 
     /**
-     * Method used to get the GoogleApiClient
-     */
+    * Method used to get the GoogleApiClient
+    */
+
     public LocationRequest getLocationRequest()
     {
         return mLocationRequest;
@@ -222,18 +221,19 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
         return mGoogleApiClient;
     }
 
-
     /**
-     * Handles the permission results
-     */
+    * Handles the permission results
+    */
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         permissionUtils.onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 
     /**
-     * Handles the activity results
-     */
+    * Handles the activity results
+    */
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
@@ -273,7 +273,6 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     public void NeverAskAgain(int request_code) {
         Log.i("PERMISSION","NEVER ASK AGAIN");
     }
-
 
 
     private void showToast(String message)

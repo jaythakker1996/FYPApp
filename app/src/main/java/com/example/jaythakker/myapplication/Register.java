@@ -1,3 +1,5 @@
+//TODO Check DOB and Mob No.
+
 package com.example.jaythakker.myapplication;
 
 import android.app.AlertDialog;
@@ -104,7 +106,7 @@ public class Register extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String url ="http://192.168.43.170:8080/subscribe/";
+                String url ="http://192.168.1.102:8080/subscribe/";
 
                 Response.Listener list=new Response.Listener<JSONObject>(){
                     @Override

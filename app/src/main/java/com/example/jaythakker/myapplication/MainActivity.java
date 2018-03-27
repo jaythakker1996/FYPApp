@@ -1,3 +1,5 @@
+//TODO Single Login
+
 package com.example.jaythakker.myapplication;
 
 import android.app.AlertDialog;
@@ -58,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
                 final String user = username.getText().toString();
                 final String pass = password.getText().toString();
-                String url ="http://192.168.43.170:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
-                //String url ="http://localhost:8080/oauth/token";
-                //ServerValues.USERNAME=user;
-                //ServerValues.PASSWORD=pass;
+                String url ="http://192.168.1.102:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
+
 
                 Response.Listener list=new Response.Listener<String>() {
 
@@ -118,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 if (user.matches(emailPattern) && user.length() > 0 && pass.length() > 0)
                 {
                     TokenRequest req=new TokenRequest(Request.Method.GET,url,list,err);
-                    //JSONRequest req=new JSONRequest(Request.Method.GET,url,null,list,err);
-                    // Access the RequestQueue through your singleton class.
                     queue.add(req);
                     mProgress.show();
                 }

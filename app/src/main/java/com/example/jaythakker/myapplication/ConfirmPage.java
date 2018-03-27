@@ -1,9 +1,11 @@
+//TODO - Make restaurant confirmation entry in the database on submit button.
+//TODO - Complete getting values of estimates from the server.
+//TODO - Add images if required.
+
 package com.example.jaythakker.myapplication;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,22 +17,34 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-
-import java.util.Arrays;
-import java.util.StringTokenizer;
-
 public class ConfirmPage extends AppCompatActivity {
 
     private Activity activity = null;
+    private ProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_page);
+        Restaurant restaurant = (Restaurant) getIntent().getParcelableExtra("Restaurant");
 
         final Button confirmBooking = (Button) findViewById(R.id.confirmBooking);
+        final TextView name = (TextView) findViewById(R.id.name);
+        final TextView cuisine = (TextView) findViewById(R.id.cuisine);
+        final TextView area = (TextView) findViewById(R.id.area);
+        final TextView estCostPerPerson = (TextView) findViewById(R.id.costPerPerson);
+        final TextView rtt = (TextView) findViewById(R.id.rtt);
+        final TextView noOfPeople = (TextView) findViewById(R.id.noOfPeople);
+        name.setText(restaurant.getName());
+        area.setText(restaurant.getArea());
+        cuisine.setText(restaurant.getCuisine());
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
         activity = this;
 
         confirmBooking.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +108,9 @@ public class ConfirmPage extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view){
+                        mProgress.show();
+                        //Database code
+                        mProgress.dismiss();
                         Intent registerIntent = new Intent(ConfirmPage.this, FilterSearch.class);
                         ConfirmPage.this.startActivity(registerIntent);
                     }
@@ -105,10 +122,4 @@ public class ConfirmPage extends AppCompatActivity {
         });
 
     }
-
-    public void showToast(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
 }
