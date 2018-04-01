@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String user = username.getText().toString();
                 final String pass = password.getText().toString();
-                String url ="http://192.168.1.102:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
+                String url ="http://192.168.43.170:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
 
 
                 Response.Listener list=new Response.Listener<String>() {

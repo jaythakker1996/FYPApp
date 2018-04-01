@@ -38,11 +38,11 @@ public class Results extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Restaurant r = restaurantList.get(position);
-                String item = r.getName();
                 Intent intent = new Intent(Results.this, ConfirmPage.class);
                 // using putExtra(String key, Parcelable value) method
                 intent.putExtra("Restaurant", r);
                 startActivity(intent);
+
             }
         });
     }

@@ -17,10 +17,23 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ConfirmPage extends AppCompatActivity {
 
     private Activity activity = null;
     private ProgressDialog mProgress;
+    final RequestQueue queue = VolleyQueue.getInstance(this.getApplicationContext()).getRequestQueue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +48,8 @@ public class ConfirmPage extends AppCompatActivity {
         final TextView estCostPerPerson = (TextView) findViewById(R.id.costPerPerson);
         final TextView rtt = (TextView) findViewById(R.id.rtt);
         final TextView noOfPeople = (TextView) findViewById(R.id.noOfPeople);
+        final String url = "";
+
         name.setText(restaurant.getName());
         area.setText(restaurant.getArea());
         cuisine.setText(restaurant.getCuisine());
@@ -46,6 +61,57 @@ public class ConfirmPage extends AppCompatActivity {
         mProgress.setIndeterminate(true);
 
         activity = this;
+
+        Response.Listener list=new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                mProgress.dismiss();
+                try {
+                    if (response != null) {
+                        JSONObject jsonObj = response;
+                        estCostPerPerson.setText("Estimated Cost Per Person : " + jsonObj.getString("estCostPerPerson"));
+                        rtt.setText("Estimated Round Trip Time : " + jsonObj.getString("estRoundTripTime"));
+
+                    } else {
+                        android.app.AlertDialog.Builder builder2 = new android.app.AlertDialog.Builder(ConfirmPage.this);
+                        builder2.setMessage("Could not update estimates. Go back and try again !")
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener err=new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mProgress.dismiss();
+                error.printStackTrace();
+                // TODO Auto-generated method stub
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ConfirmPage.this);
+                builder.setMessage("Could not get estimates. Go back and try again !")
+                        .create()
+                        .show();
+            }
+        };
+
+        JSONObject jsonObj = new JSONObject();
+
+        try {
+            jsonObj.put("restId", restaurant.getRestId());
+        }
+        catch(JSONException ex){
+            ex.printStackTrace();
+        }
+        JSONRequest req = new JSONRequest(Request.Method.POST,url,jsonObj,list,err);
+        // Access the RequestQueue through your singleton class.
+        queue.add(req);
+        mProgress.show();
 
         confirmBooking.setOnClickListener(new View.OnClickListener() {
             @Override

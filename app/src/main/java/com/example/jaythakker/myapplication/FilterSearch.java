@@ -137,7 +137,7 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
 
                 String cuisine = cuisineSelected.getSelectedItem().toString();
 
-                String url ="http://192.168.1.102:8080/auth/search/";
+                String url ="http://192.168.43.170:8080/auth/search/";
                 Response.Listener list=new Response.Listener<JSONObject>() {
 
                     @Override
@@ -156,20 +156,28 @@ public class FilterSearch extends AppCompatActivity implements GoogleApiClient.C
                                 JSONArray jsonRests = response.getJSONArray("Results");
                                 ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 
-                                for (int i = 0; i < jsonRests.length(); i++) {
-
-                                    restaurants.add(i, new Restaurant(jsonRests.getJSONObject(i).getString("restId"),
-                                            jsonRests.getJSONObject(i).getString("name"),
-                                            jsonRests.getJSONObject(i).getString("area"),
-                                            jsonRests.getJSONObject(i).getDouble("latitude"),
-                                            jsonRests.getJSONObject(i).getDouble("longitude"),
-                                            jsonRests.getJSONObject(i).getString("cuisine"),
-                                            jsonRests.getJSONObject(i).getDouble("est_cost_per_person")));
+                                if(jsonRests.getJSONObject(0).getString("name") == "NULL"){
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(FilterSearch.this);
+                                    builder2.setMessage("No results to display at the moment! Modify search parameters and try again.")
+                                            .create()
+                                            .show();
                                 }
+                                else {
+                                    for (int i = 0; i < jsonRests.length(); i++) {
 
-                                Intent registerIntent = new Intent(FilterSearch.this, Results.class);
-                                registerIntent.putParcelableArrayListExtra("Restaurants", restaurants);
-                                FilterSearch.this.startActivity(registerIntent);
+                                        restaurants.add(i, new Restaurant(jsonRests.getJSONObject(i).getString("restId"),
+                                                jsonRests.getJSONObject(i).getString("name"),
+                                                jsonRests.getJSONObject(i).getString("area"),
+                                                jsonRests.getJSONObject(i).getDouble("latitude"),
+                                                jsonRests.getJSONObject(i).getDouble("longitude"),
+                                                jsonRests.getJSONObject(i).getString("cuisine"),
+                                                jsonRests.getJSONObject(i).getDouble("est_cost_per_person")));
+                                    }
+
+                                    Intent registerIntent = new Intent(FilterSearch.this, Results.class);
+                                    registerIntent.putParcelableArrayListExtra("Restaurants", restaurants);
+                                    FilterSearch.this.startActivity(registerIntent);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
