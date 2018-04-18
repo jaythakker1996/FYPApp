@@ -1,10 +1,9 @@
-//TODO Single Login
-
 package com.example.jaythakker.myapplication;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,9 +23,22 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog mProgress;
+    //public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        /*SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
+        boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
+
+        if(hasLoggedIn)
+        {
+            Intent registerIntent = new Intent(MainActivity.this, FilterSearch.class);
+            MainActivity.this.finish();
+            MainActivity.this.startActivity(registerIntent);
+        }*/
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -35,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        final Button login = (Button) findViewById(R.id.confirmBooking);
+        final Button login = (Button) findViewById(R.id.login);
         final TextView signup = (TextView) findViewById(R.id.signup);
 
         final RequestQueue queue=VolleyQueue.getInstance(this.getApplicationContext()).getRequestQueue();;
@@ -60,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String user = username.getText().toString();
                 final String pass = password.getText().toString();
-                String url ="http://192.168.43.170:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
-
+                String url ="http://192.168.1.104:8080/oauth/token?grant_type=password&username="+user+"&password="+pass;
 
                 Response.Listener list=new Response.Listener<String>() {
 
@@ -69,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         String text = response;
                         JSONObject object = null;
+
                         try {
                             object = new JSONObject(response);
                         } catch (JSONException e) {
@@ -88,7 +100,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(access)
                         {
-                            Intent registerIntent = new Intent(MainActivity.this,FilterSearch.class);
+                            //User has successfully logged in, save this information
+                            // We need an Editor object to make preference changes.
+                            //SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0); // 0 - for private mode
+                            //SharedPreferences.Editor editor = settings.edit();
+
+                            //Set "hasLoggedIn" to true
+                            //editor.putBoolean("hasLoggedIn", true);
+                            // Commit the edits!
+                            //editor.commit();
+                            Intent registerIntent = new Intent(MainActivity.this, FilterSearch.class);
+                            MainActivity.this.finish();
                             MainActivity.this.startActivity(registerIntent);
                         }
                         else
@@ -119,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     TokenRequest req=new TokenRequest(Request.Method.GET,url,list,err);
                     queue.add(req);
+                    ServerValues.UEMAIL = user;
                     mProgress.show();
                 }
                 else

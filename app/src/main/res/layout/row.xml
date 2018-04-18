@@ -3,13 +3,13 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginEnd="7dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginLeft="3dp"
-    android:layout_marginRight="7dp"
+    android:layout_marginRight="8dp"
     android:layout_marginStart="3dp"
     android:layout_marginTop="3dp"
-    android:background="@android:color/background_light"
+    android:background="#f4f4f4"
     android:elevation="6dp"
     android:orientation="vertical"
     android:padding="4dp">
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:text="Name"
-        android:textColor="@color/place_autocomplete_search_text"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="21sp"
         android:textStyle="bold" />
 
@@ -28,15 +28,15 @@
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:text="Area"
-        android:textColor="@color/place_autocomplete_search_text"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="16sp" />
 
     <TextView
         android:id="@+id/restaurantCuisine"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:text="Cuisine"
-        android:textColor="@color/place_autocomplete_search_text"
+        android:textColor="@color/common_google_signin_btn_text_light_default"
         android:textSize="16sp" />
 
 </LinearLayout>

@@ -112,7 +112,7 @@
 
 
     <TextView
-        android:id="@+id/confirmBooking"
+        android:id="@+id/login"
         android:layout_width="51dp"
         android:layout_height="29dp"
         android:layout_marginEnd="47dp"
@@ -138,7 +138,7 @@
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/confirmBooking"
+        app:layout_constraintRight_toLeftOf="@+id/login"
         app:layout_constraintTop_toBottomOf="@+id/register"
         tools:layout_constraintRight_creator="1" />
 

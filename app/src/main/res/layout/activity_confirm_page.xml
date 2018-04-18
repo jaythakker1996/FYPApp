@@ -10,21 +10,17 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="201dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
-        android:src="@drawable/default_rest"
+        android:layout_width="382dp"
+        android:layout_height="236dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/common_google_signin_btn_text_dark_default"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        app:srcCompat="@drawable/default_rest" />
 
     <TextView
         android:id="@+id/name"
@@ -34,19 +30,18 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:text="Grand Central"
         android:textAllCaps="true"
-        android:textColor="@color/accent_material_dark_1"
+        android:textColor="@android:color/holo_blue_light"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="234dp" />
 
     <TextView
         android:id="@+id/area"
@@ -152,8 +147,8 @@
         tools:layout_constraintTop_creator="1" />
 
     <Button
-        android:id="@+id/confirmBooking"
-        android:layout_width="229dp"
+        android:id="@+id/login"
+        android:layout_width="210dp"
         android:layout_height="54dp"
         android:backgroundTint="@android:color/holo_blue_dark"
         android:text=" CONFIRM BOOKING"
@@ -161,12 +156,10 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noOfPeople"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintVertical_bias="0.468" />
+        tools:layout_constraintRight_creator="1" />
 
 </android.support.constraint.ConstraintLayout>

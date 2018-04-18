@@ -44,7 +44,7 @@ public class Register extends AppCompatActivity {
         final EditText em=(EditText) findViewById(R.id.emailid);
         final EditText num =(EditText) findViewById(R.id.number);
         final EditText date=(EditText) findViewById(R.id.date);
-        final TextView login = (TextView) findViewById(R.id.confirmBooking);
+        final TextView login = (TextView) findViewById(R.id.login);
 
 
         mProgress = new ProgressDialog(this);
@@ -107,7 +107,7 @@ public class Register extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String url ="http://192.168.43.170:8080/subscribe/";
+                String url ="http://192.168.1.104:8080/subscribe/";
 
                 Response.Listener list=new Response.Listener<JSONObject>(){
                     @Override
